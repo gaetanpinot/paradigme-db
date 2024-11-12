@@ -4,7 +4,7 @@ networks:
 
 services:
 
-  api.paradb:
+  phpparadb:
     build:
       context: build
       dockerfile: 8.3-cli.Dockerfile
@@ -25,18 +25,20 @@ services:
     restart: unless-stopped
 
   paradb.db:
-    image: 'postgres:latest'
+    image: 'mariadb:latest'
     env_file: ./paradb.env
     ports:
-      - '6667:5432'
+      - '1081:5432'
     networks:
       - paradb.net
     restart: unless-stopped
+    volumes:
+      - ./sql:/var/sql
 
   adminer:
     image: 'adminer'
     ports:
-      - '6668:8080'
+      - '1082:8080'
     networks:
       - paradb.net
     command: php -S 0.0.0.0:8080 -t /var/www/html
