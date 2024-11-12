@@ -1,3 +1,5 @@
 <?php
+require_once();
+use \iutnc\hellokant\query\Query; 
 
-echo "bonjour";
+Query::table('employé')->where('nom','=','Pierre')->select('nom, prenom, age')->get();
