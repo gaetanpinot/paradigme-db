@@ -1,0 +1,15 @@
+{
+
+  "require" : {
+    "php": ">=8.2",
+        "ext-pdo": "*"
+
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4" : {
+      "iutnc\\hellokant\\" : "./src"
+    }
+  }
+}

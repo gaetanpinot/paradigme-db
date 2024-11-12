@@ -1,0 +1,45 @@
+networks:
+  paradb.net:
+    driver: bridge
+
+services:
+
+  api.paradb:
+    build:
+      context: build
+      dockerfile: 8.3-cli.Dockerfile
+    ports:
+      - '1080:80'
+    volumes:
+      - ./td1:/var/php/td1
+      - ./td2:/var/php/td2
+      - ./td3:/var/php/td3
+      - ./td4:/var/php/td4
+      - ./sql:/var/sql
+    working_dir: /var/php
+    networks:
+      - paradb.net
+    depends_on:
+      - paradb.db
+    command: php -S 0.0.0.0:80 -t /var/php
+    restart: unless-stopped
+
+  paradb.db:
+    image: 'postgres:latest'
+    env_file: ./paradb.env
+    ports:
+      - '6667:5432'
+    networks:
+      - paradb.net
+    restart: unless-stopped
+
+  adminer:
+    image: 'adminer'
+    ports:
+      - '6668:8080'
+    networks:
+      - paradb.net
+    command: php -S 0.0.0.0:8080 -t /var/www/html
+    restart: unless-stopped
+
+
