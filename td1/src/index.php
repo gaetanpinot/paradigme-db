@@ -1,5 +1,3 @@
 <?php
-require_once();
-use \iutnc\hellokant\query\Query; 
-
+require_once __DIR__ . '/../vendor/autoload.php';
 Query::table('employé')->where('nom','=','Pierre')->select('nom, prenom, age')->get();
