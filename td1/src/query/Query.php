@@ -1,12 +1,13 @@
 <?php 
-
-namespace \iutnc\hellokant\query\Query; 
+namespace iutnc\hellokant\query; 
 
 class Query {
     protected $table;
     protected $columns = '*';
 
     protected $whereConditions = [];
+
+    protected $args = [];
     
  
 
@@ -17,12 +18,14 @@ class Query {
     }
 
     public function where($column, $operator,$value): Query {
-        array_push($this->whereConditions,$column.' '.$operator.' '.$value);
+        array_push($this->whereConditions,$column.' '.$operator.' ?');
+        array_push($this->args,$value);
         return $this;  
     }
 
     public function get() {
-        echo 'SELECT'.$this->columns.' FROM '.$this->table.' WHERE '.implode(' AND ',$this->whereConditions);
+        echo 'SELECT '.$this->columns.' FROM '.$this->table.' WHERE '.implode(' AND ',$this->whereConditions);
+        echo ' <br> Attributes : '. implode(',',$this->args);
     }
 
     public function select($columns): Query {
