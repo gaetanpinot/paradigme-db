@@ -28,7 +28,7 @@ services:
     image: 'mariadb:latest'
     env_file: ./paradb.env
     ports:
-      - '1081:5432'
+      - '1081:3306'
     networks:
       - paradb.net
     restart: unless-stopped
