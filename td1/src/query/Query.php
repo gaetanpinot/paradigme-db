@@ -1,6 +1,8 @@
 <?php 
 namespace iutnc\hellokant\query; 
 
+
+
 class Query {
     protected $table;
     protected $columns = '*';
@@ -8,12 +10,13 @@ class Query {
     protected $whereConditions = [];
 
     protected $args = [];
-    
- 
+
+    protected $pdo; 
 
     static public function table($tablename): Query {
         $query = new Query();
         $query->table = $tablename;
+        $pdo = ConnectionFactory::getConnection();
         return $query;
     }
 
@@ -24,8 +27,8 @@ class Query {
     }
 
     public function get() {
-        echo 'SELECT '.$this->columns.' FROM '.$this->table.' WHERE '.implode(' AND ',$this->whereConditions);
-        echo ' <br> Attributes : '. implode(',',$this->args);
+        $this->pdo->prepare('SELECT '.$this->columns.' FROM '.$this->table.' WHERE '.implode(' AND ',$this->whereConditions));
+        $this->pdo->execute($this->args);
     }
 
     public function select($columns): Query {
@@ -34,11 +37,13 @@ class Query {
     }
 
     public function delete() {
-        echo 'DELETE FROM'.$this->table.' WHERE '.implode(' AND ',$this->whereConditions);
+        $this->pdo->prepare('DELETE FROM'.$this->table.' WHERE '.implode(' AND ',$this->whereConditions));
+        $this->pdo->execute();
     }
 
     public function insert($data) {
-        echo 'INSERT INTO '. $this->table.' ('.$this->columns.') VALUES '.implode(', ',$data);
+        $this->pdo->prepare('INSERT INTO '. $this->table.' ('.$this->columns.') VALUES (?)');
+        $this->pdo->execute($data);
     }
 
 }
