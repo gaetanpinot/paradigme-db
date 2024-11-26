@@ -1,7 +1,7 @@
 <?php 
 namespace iutnc\hellokant\query; 
 
-
+use iutnc\hellokant\ConnectionFactory;
 
 class Query {
     protected $table;
