@@ -48,8 +48,8 @@ class Query {
     }
 
     public function delete(): void {
-        $statement = $this->pdo->prepare('DELETE FROM'.$this->table.' WHERE '.implode(' AND ',$this->whereConditions));
-        $statement->execute();
+        $statement = $this->pdo->prepare('DELETE FROM '.$this->table.' WHERE '.implode(' AND ',$this->whereConditions));
+        $statement->execute($this->args);
     }
     /**
      * @return void
