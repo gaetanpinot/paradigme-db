@@ -1,4 +1,5 @@
 <?php 
+<<<<<<< HEAD
 namespace iutnc\hellokant\query;
 
 use iutnc\hellokant\ConnectionFactory; 
