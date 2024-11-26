@@ -34,6 +34,7 @@ class ConnectionFactory
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_EMULATE_PREPARES => false,
                     PDO::ATTR_STRINGIFY_FETCHES => false,
+                    PDO::FETCH_ASSOC => true,
                 ];
 
                 self::$pdoInstance = new PDO($dsn, $conf['user'], $conf['password'], $options);
