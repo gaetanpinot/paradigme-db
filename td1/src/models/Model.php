@@ -10,10 +10,10 @@ class Model{
     protected array $attributs;
 
     //Nom de la clé primaire dans la table
-    public string $primaryKey;
+    public static string $primaryKey = "";
 
     //Nom de la table
-    public string $table;
+    public static string $table = "";
 
     public Query $query;
 
@@ -23,9 +23,12 @@ class Model{
     public function __construct(array $attributs=[])
     {
         $this->attributs = $attributs;
-        $this->query = Query::table($this->table);
+        $this->query = Query::table($this::$table);
     }
 
+    public static function all(){
+        echo (static::$table);
+    }
     /**
      * @param mixed $att
      */
@@ -46,14 +49,14 @@ class Model{
     }
 
     public function delete(): void{
-        if( isset($this->attributs[$this->primaryKey])){
-            $this->query->where($this->primaryKey, '=' ,$this->attributs[$this->primaryKey])->delete();
+        if( isset($this->attributs[$this::$primaryKey])){
+            $this->query->where($this::$primaryKey, '=' ,$this->attributs[$this::$primaryKey])->delete();
         }
     }
 
     public function insert(): string|false{
         $att = $this->attributs;
-        unset($att[$this->primaryKey] );
+        unset($att[$this::$primaryKey] );
         return $this->query->insert($att);
 
     }

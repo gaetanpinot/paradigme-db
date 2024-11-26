@@ -25,3 +25,4 @@ $article = new Article();
 $article->id = 114;
 $article->delete();
 
+Article::all();

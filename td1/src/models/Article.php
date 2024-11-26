@@ -6,8 +6,8 @@ use iutnc\hellokant\models\Model;
 
 class Article extends Model{
 
-    public string $primaryKey = "id";
+    public static string $primaryKey = "id";
 
-    public string $table = "article";
+    public static string $table = "article";
     
 }
