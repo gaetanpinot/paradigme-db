@@ -8,7 +8,10 @@ use iutnc\hellokant\query\Query;
 
 //Article test
 $article  = new Article(['title' => 'Hello', 'content' => 'World']);
-echo $article->title;
+echo $article->title . "<br>";
 echo $article->content;
 $article->title = 'Bonjour';
-var_dump($article);
+
+
+$article->delete();
+echo "Article deleted!";
