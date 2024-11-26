@@ -51,4 +51,11 @@ class Model{
         }
     }
 
+    public function insert(): string|false{
+        $att = $this->attributs;
+        unset($att[$this->primaryKey] );
+        return $this->query->insert($att);
+
+    }
+
 }
