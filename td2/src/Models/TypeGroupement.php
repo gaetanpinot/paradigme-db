@@ -31,10 +31,10 @@ class TypeGroupement
     #[ORM\Column(type: "integer")]
     private int $id;
 
-    #[ORM\Column(type: "string", length: 48)]
+    #[ORM\Column(name: "type_libelle", type: "string", length: 48)]
     private string $typeLibelle;
 
-    #[ORM\Column(type: "text")]
+    #[ORM\Column(name: "type_description", type: "text")]
     private string $typeDescription;
 
     #[ORM\OneToMany(targetEntity: Groupement::class, mappedBy: "type")]

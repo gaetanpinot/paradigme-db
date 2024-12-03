@@ -4,21 +4,33 @@ namespace iutnc\Models;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\CustomIdGenerator;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
+use Ramsey\Uuid\Uuid;
 
 
 #[Entity]
 #[Table(name: "praticien", schema: "public")]
 class Praticien
 {
+    public function getSpecialite(): Specialite
+    {
+        return $this->specialite;
+    }
     #[Id]
     #[Column(type: Types::GUID)]
+    #[GeneratedValue(strategy: "NONE")]
     private string $id;
 
+    public function __construct()
+    {
+        $this->id = Uuid::uuid4();
+    }
     public function setId(string $id): void
     {
         $this->id = $id;
