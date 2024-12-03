@@ -28,4 +28,22 @@ class Personnel
     #[ORM\JoinColumn(name: "groupe_id", referencedColumnName: "id", nullable: false)]
     private Groupement $groupe;
 
+    public function getId(): string{
+        return $this->id;
+    }
+    public function getNom(): string{
+        return $this->nom;
+    }
+    public function getPrenom(): string{
+        return $this->prenom;
+    }
+    public function getMail(): string{
+        return $this->mail;
+    }
+    public function getTelephone(): string{
+        return $this->telephone;
+    }
+    public function getGroupe(): Groupement{
+        return $this->groupe;
+    }
 }

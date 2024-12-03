@@ -21,4 +21,16 @@ class TypeGroupement
     #[ORM\OneToMany(targetEntity: Groupement::class, mappedBy: "type")]
     private iterable $groupements;
     
+    public function getId(){
+        return $this->id;
+    }
+    public function getTypeLibelle(){
+        return $this->typeLibelle;
+    }
+    public function getTypeDescription(){
+        return $this->typeDescription;
+    }
+    public function getGroupements(){
+        return $this->groupements;
+    }
 }

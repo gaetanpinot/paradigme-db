@@ -31,5 +31,26 @@ class Groupement
     #[ORM\OneToMany(targetEntity: Praticien::class, mappedBy: "groupe")]
     private iterable $praticiens;
 
+    public function getId(): string{
+        return $this->id;
+    }
+    public function getNom(): string{
+        return $this->nom;
+    }
+    public function getType(): TypeGroupement{
+        return $this->type;
+    }
+    public function getAdresse(): string{
+        return $this->adresse;
+    }
+    public function getVille(): ?string{
+        return $this->ville;
+    }
+    public function getPersonnels(): iterable{
+        return $this->personnels;
+    }
+    public function getPraticiens(): iterable{
+        return $this->praticiens;
+    }
 }
 
