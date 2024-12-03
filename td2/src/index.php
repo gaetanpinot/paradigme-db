@@ -19,6 +19,15 @@ createAttributeMetadataConfiguration($entity_path, $isDevMode);
 $connection = DriverManager::getConnection($dbParams, $config);
 $entityManager = new EntityManager($connection, $config);
 $pratiecienRepo = $entityManager->getRepository(Praticien::class);
-$prat = $pratiecienRepo->findOneBy(['nom'=>'Paul']);
-var_dump($prat);
-
+$specialiteRepo = $entityManager->getRepository(Specialite::class);
+//Exercice 1
+echo "
+<h1> TD2</h1>
+<h3> Exercice 1</h3>
+";
+$specialite = $specialiteRepo->find(1);
+echo "
+<p><h4>1</h4>
+id : {$specialite->getId()}, libelle : {$specialite->getLibelle()}, description : {$specialite->getDescription()}.
+</p>
+";

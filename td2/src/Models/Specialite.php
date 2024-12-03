@@ -28,4 +28,16 @@ class Specialite
     #[OneToMany(targetEntity: Praticien::class, mappedBy: "specialite")]
     private iterable $praticiens;
 
+    public function getId(){
+        return $this->id;
+    }
+    public function getLibelle(){
+        return $this->libelle;
+    }
+    public function getDescription(){
+        return $this->description;
+    }
+    public function getPraticiens(){
+        return $this->praticiens;
+    }
 }
