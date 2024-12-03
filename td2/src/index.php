@@ -7,6 +7,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Doctrine\DBAL\DriverManager;
 // contenant les classes entité
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMSetup;
 use iutnc\Models\Praticien;
 use iutnc\Models\Specialite;
@@ -18,6 +19,6 @@ createAttributeMetadataConfiguration($entity_path, $isDevMode);
 $connection = DriverManager::getConnection($dbParams, $config);
 $entityManager = new EntityManager($connection, $config);
 $pratiecienRepo = $entityManager->getRepository(Praticien::class);
-$prat = $pratiecienRepo->findOneBy();
+$prat = $pratiecienRepo->findOneBy(['nom'=>'Paul']);
 var_dump($prat);
 
