@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
+
 use iutnc\hellokant\models\Article;
 use iutnc\hellokant\models\Categorie;
 use iutnc\hellokant\query\Query;
