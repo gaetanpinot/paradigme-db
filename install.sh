@@ -12,5 +12,7 @@ docker exec $contpgsql bash -c "PGPASSWORD=$POSTGRES_PASSWORD psql -U $POSTGRES_
 docker exec $contpgsql bash -c "PGPASSWORD=$POSTGRES_PASSWORD psql -U $POSTGRES_USER -d $POSTGRES_DB -f /var/sql/prati.data.sql";
 docker exec $contsql bash -c "cat /var/sql/arti.sql | mariadb -u $MYSQL_USER --password=$MYSQL_PASSWORD $MYSQL_DATABASE";
 docker exec $contphp composer install --working-dir=td1;
+docker exec $contphp composer update --working-dir=td1;
 docker exec $contphp composer install --working-dir=td2;
+docker exec $contphp composer update --working-dir=td2;
 

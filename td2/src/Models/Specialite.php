@@ -1,26 +1,31 @@
 <?php
 
-namespace Models;
+namespace iutnc\Models;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\Table;
 
-#[ORM\Entity]
-#[ORM\Table(name: "specialite", schema: "public")]
+#[Entity]
+#[Table(name: "specialite")]
 class Specialite
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
-    #[ORM\SequenceGenerator(sequenceName: "specialite_id_seq", allocationSize: 1, initialValue: 1)]
-    #[ORM\Column(type: "integer")]
+    #[Id]
+    #[Column(type: Types::INTEGER)]
+    #[GeneratedValue(strategy: "AUTO")]
     private int $id;
 
-    #[ORM\Column(type: "string", length: 48)]
+    #[Column(name: "libelle", type: Types::STRING, length: 48)]
     private string $libelle;
 
-    #[ORM\Column(type: "text", nullable: true)]
+    #[Column(name: "description", type: Types::STRING, nullable: true)]
     private ?string $description;
 
-    #[ORM\OneToMany(targetEntity: Praticien::class, mappedBy: "specialite")]
+    #[OneToMany(targetEntity: Praticien::class, mappedBy: "specialite")]
     private iterable $praticiens;
 
 }

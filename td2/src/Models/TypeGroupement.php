@@ -1,6 +1,6 @@
 <?php
 
-namespace Models;
+namespace iutnc\Models;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 class TypeGroupement
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
-    #[ORM\SequenceGenerator(sequenceName: "Type_groupement_id_seq", allocationSize: 1, initialValue: 1)]
     #[ORM\Column(type: "integer")]
     private int $id;
 
