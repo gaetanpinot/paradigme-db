@@ -20,12 +20,15 @@ services:
     networks:
       - paradb.net
     depends_on:
-      - paradb.db
+      paradb.db:
+        condition: service_healthy
+      pgsql.db:
+        condition: service_healthy
     command: php -S 0.0.0.0:80 -t /var/php
     restart: unless-stopped
 
   paradb.db:
-    image: 'mariadb:latest'
+    image: 'mariadb:11.6.2-noble'
     env_file: ./paradb.env
     ports:
       - '1081:3306'
@@ -34,6 +37,27 @@ services:
     restart: unless-stopped
     volumes:
       - ./sql:/var/sql
+    healthcheck:
+      test: ["CMD-SHELL", 'mariadb-admin ping -u ${MYSQL_USER} --password=${MYSQL_PASSWORD}']
+      interval: 2s
+      timeout: 2s
+      retries: 10
+
+  pgsql.db:
+    image: 'postgres:latest'
+    env_file: ./paradbpgsql.env
+    networks:
+      - paradb.net
+    restart: unless-stopped
+    volumes:
+      - ./pgsql:/var/sql
+    ports:
+      - '1083:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 2s
+      retries: 5
+      timeout: 10s
 
   adminer:
     image: 'adminer'
