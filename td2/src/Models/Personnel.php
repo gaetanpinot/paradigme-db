@@ -8,6 +8,35 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: "personnel", schema: "public")]
 class Personnel
 {
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setNom(string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    public function setPrenom(string $prenom): void
+    {
+        $this->prenom = $prenom;
+    }
+
+    public function setMail(string $mail): void
+    {
+        $this->mail = $mail;
+    }
+
+    public function setTelephone(string $telephone): void
+    {
+        $this->telephone = $telephone;
+    }
+
+    public function setGroupe(Groupement $groupe): void
+    {
+        $this->groupe = $groupe;
+    }
     #[ORM\Id]
     #[ORM\Column(type: "uuid")]
     private string $id;

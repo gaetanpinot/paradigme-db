@@ -14,6 +14,25 @@ use Doctrine\ORM\Mapping\Table;
 #[Table(name: "specialite")]
 class Specialite
 {
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setLibelle(string $libelle): void
+    {
+        $this->libelle = $libelle;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function setPraticiens(iterable $praticiens): void
+    {
+        $this->praticiens = $praticiens;
+    }
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue(strategy: "AUTO")]

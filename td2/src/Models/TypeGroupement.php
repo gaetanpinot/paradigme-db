@@ -8,6 +8,25 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: "type_groupement", schema: "public")]
 class TypeGroupement
 {
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setTypeLibelle(string $typeLibelle): void
+    {
+        $this->typeLibelle = $typeLibelle;
+    }
+
+    public function setTypeDescription(string $typeDescription): void
+    {
+        $this->typeDescription = $typeDescription;
+    }
+
+    public function setGroupements(iterable $groupements): void
+    {
+        $this->groupements = $groupements;
+    }
     #[ORM\Id]
     #[ORM\Column(type: "integer")]
     private int $id;

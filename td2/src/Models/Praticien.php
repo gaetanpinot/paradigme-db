@@ -19,6 +19,46 @@ class Praticien
     #[Column(type: Types::GUID)]
     private string $id;
 
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setNom(string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    public function setPrenom(string $prenom): void
+    {
+        $this->prenom = $prenom;
+    }
+
+    public function setVille(string $ville): void
+    {
+        $this->ville = $ville;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setTelephone(string $telephone): void
+    {
+        $this->telephone = $telephone;
+    }
+
+    public function setSpecialite(Specialite $specialite): void
+    {
+        $this->specialite = $specialite;
+    }
+
+    public function setGroupe(?Groupement $groupe): void
+    {
+        $this->groupe = $groupe;
+    }
+
 
     #[Column(type: "string", length: 48)]
     private string $nom;
