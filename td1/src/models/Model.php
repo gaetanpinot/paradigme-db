@@ -27,8 +27,21 @@ class Model{
     }
 
     public static function all(){
-        echo (static::$table);
+        $results = Query::table(static::$table)->select(['*'])->get();
+        $arrayMap = array_map(function($row) {
+            return new static($row);
+        }, $results);
+        return $arrayMap;
     }
+
+    public static function find($where, $select = ['*']) {
+        $results = Query::table(static::$table)->select($select)->where($where[0], $where[1], $where[2])->get();
+        $arrayMap = array_map(function($row) {
+            return new static($row);
+        }, $results);
+        return $arrayMap;
+    }
+
     /**
      * @param mixed $att
      */
@@ -59,6 +72,16 @@ class Model{
         unset($att[$this::$primaryKey] );
         return $this->query->insert($att);
 
+    }
+
+    public function belongs_to($table, $foreignKey) {
+        $fullTableName = 'iutnc\hellokant\models\\'.$table;
+        $secondClass = new $fullTableName();
+        return Query::table(strtolower($table))->where($secondClass::$primaryKey, '=',$this->attributs[$foreignKey])->select(['*'])->get();
+    }
+
+    public function has_many($table, $foreignKey) {
+        return Query::table(strtolower($table))->where($foreignKey, '=',$this->attributs[$this::$primaryKey])->select(['*'])->get();
     }
 
 }

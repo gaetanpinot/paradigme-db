@@ -1,4 +1,4 @@
-#!/usr/bin/sh 
+#!/usr/bin/bash 
 source ./paradb.env
 contphp=paradb-phpparadb-1
 contsql=paradb-paradb.db-1

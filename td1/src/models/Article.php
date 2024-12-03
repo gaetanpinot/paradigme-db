@@ -10,4 +10,7 @@ class Article extends Model{
 
     public static string $table = "article";
     
+    public function categorie() {
+        return $this->belongs_to('Categorie', 'id_categ');
+    }
 }
