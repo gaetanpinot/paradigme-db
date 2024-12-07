@@ -3,8 +3,11 @@
 namespace iutnc\Models;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Ramsey\Uuid\Uuid;
+use iutnc\Repository\PersonnelRepository;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: PersonnelRepository::class)]
 #[ORM\Table(name: "personnel", schema: "public")]
 class Personnel
 {
@@ -38,8 +41,13 @@ class Personnel
         $this->groupe = $groupe;
     }
     #[ORM\Id]
-    #[ORM\Column(type: "uuid")]
+    #[ORM\Column(type: "guid")]
+    #[GeneratedValue(strategy: "NONE")]
     private string $id;
+    public function __construct()
+    {
+        $this->id = Uuid::uuid4();
+    }
 
     #[ORM\Column(type: "string", length: 48)]
     private string $nom;

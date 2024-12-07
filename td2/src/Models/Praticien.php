@@ -12,9 +12,10 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 use Ramsey\Uuid\Uuid;
+use iutnc\Repository\PraticienRepository;
 
 
-#[Entity]
+#[Entity(repositoryClass: PraticienRepository::class)]
 #[Table(name: "praticien", schema: "public")]
 class Praticien
 {

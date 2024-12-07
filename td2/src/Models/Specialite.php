@@ -9,8 +9,9 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
+use iutnc\Repository\SpecialiteRepository;
 
-#[Entity]
+#[Entity(repositoryClass: SpecialiteRepository::class)]
 #[Table(name: "specialite")]
 class Specialite
 {

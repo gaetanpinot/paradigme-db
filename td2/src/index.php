@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMSetup;
 use iutnc\Models\Groupement;
+use iutnc\Models\Personnel;
 use iutnc\Models\Praticien;
 use iutnc\Models\Specialite;
 use iutnc\Models\TypeGroupement;
@@ -26,6 +27,7 @@ $pratiecienRepo = $entityManager->getRepository(Praticien::class);
 $specialiteRepo = $entityManager->getRepository(Specialite::class);
 $groupementRepo = $entityManager->getRepository(Groupement::class);
 $typegroupementRepo = $entityManager->getRepository(TypeGroupement::class);
+$personnelRepo = $entityManager->getRepository(Personnel::class);
 
 //Exercice 1
 echo "
@@ -95,3 +97,56 @@ echo "
 Praticien supprimé
 </p>
 ";
+
+$specialite = $specialiteRepo->find(1);
+echo "
+<h3>Exercice 3</h3>
+<p><h4> 1</h4>";
+$prats = $pratiecienRepo->getPraticiensBySpecialite($specialite); 
+foreach($prats as $prat){
+	echo "<p>
+	id : {$prat->getId()}, nom : {$prat->getNom()}, prenom : {$prat->getPrenom()}, ville : {$prat->getVille()}, email : {$prat->getEmail()}, telephone : {$prat->getTelephone()},
+	groupe : {$prat->getGroupe()->getNom()}, specialite {$prat->getSpecialite()->getLibelle()}
+	</p>";
+}
+echo "</p>";
+
+$mot = "des";
+$specialites = $specialiteRepo->getSpecialiteWithWord($mot);
+echo "
+<p><h4>2</h4>
+Mot chérché : $mot";
+foreach($specialites as $specialite){
+	echo "<p> id : {$specialite->getId()}, libelle : {$specialite->getLibelle()}, description : {$specialite->getDescription()}. </p>";
+}
+echo "</p>";
+
+
+$specialite = $specialiteRepo->find(1);
+$ville = "paris";
+echo "
+<p><h4> 3</h4>
+Ville cherché : $ville
+Specialite cherché : {$specialite->getLibelle()}";
+$prats = $pratiecienRepo->getPraticiensBySpecialiteAndVille($specialite, $ville); 
+foreach($prats as $prat){
+	echo "<p>
+	id : {$prat->getId()}, nom : {$prat->getNom()}, prenom : {$prat->getPrenom()}, ville : {$prat->getVille()}, email : {$prat->getEmail()}, telephone : {$prat->getTelephone()},
+	groupe : {$prat->getGroupe()->getNom()}, specialite {$prat->getSpecialite()->getLibelle()}
+	</p>";
+}
+echo "</p>";
+
+
+$ville = "paris";
+echo "
+<p><h4> 4</h4>
+Ville cherché : $ville";
+$personnels = $personnelRepo->getPersonnelByVille($ville);
+foreach($personnels as $perso){
+	echo "<p>
+	id : {$perso->getId()}, nom : {$perso->getNom()}, prenom : {$perso->getPrenom()}, ville : {$perso->getGroupe()->getVille()}, email : {$perso->getMail()}, telephone : {$perso->getTelephone()},
+	groupe : {$perso->getGroupe()->getNom()}
+	</p>";
+}
+echo "</p>";
