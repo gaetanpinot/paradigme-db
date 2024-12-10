@@ -69,3 +69,22 @@ services:
     restart: unless-stopped
 
 
+  mongo:
+    image: mongo:latest
+    volumes:
+    - ./mongo:/var/data
+    working_dir: /var/data
+    networks:
+    - paradb.net
+    ports:
+    - 27017:27017
+
+  mongo-express:
+    image: mongo-express:latest
+    networks:
+    - paradb.net
+    depends_on:
+    - mongo
+    ports:
+    - "8081:8081"
+

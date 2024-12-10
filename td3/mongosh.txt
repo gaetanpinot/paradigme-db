@@ -1,3 +1,4 @@
+0 use chopizza
 1 db.produits.find().pretty();
 2 db.produits.estimatedDocumentCount();
 3 db.produits.find().sort({ numero: -1 }).pretty();

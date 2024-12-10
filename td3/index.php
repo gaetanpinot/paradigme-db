@@ -8,7 +8,7 @@
 
 use MongoDB\Client;
 
-require_once __DIR__ . "/../src/vendor/autoload.php";
+require_once __DIR__ . "/vendor/autoload.php";
 
 $c = new Client("mongodb://mongo");
 echo "connected to mongo <br>";
