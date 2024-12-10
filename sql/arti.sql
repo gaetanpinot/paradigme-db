@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `article`
 --
-
+DROP TABLE IF EXISTS `article` ;
 CREATE TABLE `article` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(36) CHARACTER SET utf8 NOT NULL,
@@ -50,6 +50,7 @@ INSERT INTO `article` (`id`, `nom`, `descr`, `tarif`, `id_categ`) VALUES
 -- Structure de la table `categorie`
 --
 
+DROP TABLE IF EXISTS `categorie` ;
 CREATE TABLE `categorie` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(32) CHARACTER SET utf8 NOT NULL,

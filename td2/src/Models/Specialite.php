@@ -1,26 +1,63 @@
 <?php
 
-namespace Models;
+namespace iutnc\Models;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\Table;
+use iutnc\Repository\SpecialiteRepository;
 
-#[ORM\Entity]
-#[ORM\Table(name: "specialite", schema: "public")]
+#[Entity(repositoryClass: SpecialiteRepository::class)]
+#[Table(name: "specialite")]
 class Specialite
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
-    #[ORM\SequenceGenerator(sequenceName: "specialite_id_seq", allocationSize: 1, initialValue: 1)]
-    #[ORM\Column(type: "integer")]
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setLibelle(string $libelle): void
+    {
+        $this->libelle = $libelle;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function setPraticiens(iterable $praticiens): void
+    {
+        $this->praticiens = $praticiens;
+    }
+    #[Id]
+    #[Column(type: Types::INTEGER)]
+    #[GeneratedValue(strategy: "AUTO")]
     private int $id;
 
-    #[ORM\Column(type: "string", length: 48)]
+    #[Column(name: "libelle", type: Types::STRING, length: 48)]
     private string $libelle;
 
-    #[ORM\Column(type: "text", nullable: true)]
+    #[Column(name: "description", type: Types::STRING, nullable: true)]
     private ?string $description;
 
-    #[ORM\OneToMany(targetEntity: Praticien::class, mappedBy: "specialite")]
+    #[OneToMany(targetEntity: Praticien::class, mappedBy: "specialite")]
     private iterable $praticiens;
 
+    public function getId(){
+        return $this->id;
+    }
+    public function getLibelle(){
+        return $this->libelle;
+    }
+    public function getDescription(){
+        return $this->description;
+    }
+    public function getPraticiens(){
+        return $this->praticiens;
+    }
 }

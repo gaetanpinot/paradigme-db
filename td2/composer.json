@@ -2,9 +2,10 @@
 
   "require" : {
     "php": ">=8.2",
-    "doctrine/orm": "^3",
-    "doctrine/dbal": "^4",
-    "symfony/cache": "^7"
+    "doctrine/orm": "*",
+    "doctrine/dbal": "*",
+    "symfony/cache": "*",
+    "ramsey/uuid-doctrine": "*"
 
   },
   "require-dev": {

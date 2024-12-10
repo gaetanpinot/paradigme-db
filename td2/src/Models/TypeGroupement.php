@@ -1,6 +1,6 @@
 <?php
 
-namespace Models;
+namespace iutnc\Models;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,19 +8,48 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: "type_groupement", schema: "public")]
 class TypeGroupement
 {
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setTypeLibelle(string $typeLibelle): void
+    {
+        $this->typeLibelle = $typeLibelle;
+    }
+
+    public function setTypeDescription(string $typeDescription): void
+    {
+        $this->typeDescription = $typeDescription;
+    }
+
+    public function setGroupements(iterable $groupements): void
+    {
+        $this->groupements = $groupements;
+    }
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
-    #[ORM\SequenceGenerator(sequenceName: "Type_groupement_id_seq", allocationSize: 1, initialValue: 1)]
     #[ORM\Column(type: "integer")]
     private int $id;
 
-    #[ORM\Column(type: "string", length: 48)]
+    #[ORM\Column(name: "type_libelle", type: "string", length: 48)]
     private string $typeLibelle;
 
-    #[ORM\Column(type: "text")]
+    #[ORM\Column(name: "type_description", type: "text")]
     private string $typeDescription;
 
     #[ORM\OneToMany(targetEntity: Groupement::class, mappedBy: "type")]
     private iterable $groupements;
     
+    public function getId(){
+        return $this->id;
+    }
+    public function getTypeLibelle(){
+        return $this->typeLibelle;
+    }
+    public function getTypeDescription(){
+        return $this->typeDescription;
+    }
+    public function getGroupements(){
+        return $this->groupements;
+    }
 }

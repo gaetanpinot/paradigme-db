@@ -1,38 +1,120 @@
 <?php
 
-namespace Models;
+namespace iutnc\Models;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\CustomIdGenerator;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
+use Ramsey\Uuid\Uuid;
+use iutnc\Repository\PraticienRepository;
 
-#[ORM\Entity]
-#[ORM\Table(name: "praticien", schema: "public")]
+
+#[Entity(repositoryClass: PraticienRepository::class)]
+#[Table(name: "praticien", schema: "public")]
 class Praticien
 {
-    #[ORM\Id]
-    #[ORM\Column(type: "uuid")]
+    public function getSpecialite(): Specialite
+    {
+        return $this->specialite;
+    }
+    #[Id]
+    #[Column(type: Types::GUID)]
+    #[GeneratedValue(strategy: "NONE")]
     private string $id;
 
-    #[ORM\Column(type: "string", length: 48)]
+    public function __construct()
+    {
+        $this->id = Uuid::uuid4();
+    }
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setNom(string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    public function setPrenom(string $prenom): void
+    {
+        $this->prenom = $prenom;
+    }
+
+    public function setVille(string $ville): void
+    {
+        $this->ville = $ville;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setTelephone(string $telephone): void
+    {
+        $this->telephone = $telephone;
+    }
+
+    public function setSpecialite(Specialite $specialite): void
+    {
+        $this->specialite = $specialite;
+    }
+
+    public function setGroupe(?Groupement $groupe): void
+    {
+        $this->groupe = $groupe;
+    }
+
+
+    #[Column(type: "string", length: 48)]
     private string $nom;
 
-    #[ORM\Column(type: "string", length: 48)]
+    #[Column(type: "string", length: 48)]
     private string $prenom;
 
-    #[ORM\Column(type: "string", length: 48)]
+    #[Column(type: "string", length: 48)]
     private string $ville;
 
-    #[ORM\Column(type: "string", length: 128)]
+    #[Column(type: "string", length: 128)]
     private string $email;
 
-    #[ORM\Column(type: "string", length: 24)]
+    #[Column(type: "string", length: 24)]
     private string $telephone;
 
-    #[ORM\ManyToOne(targetEntity: Specialite::class, inversedBy: "praticiens")]
-    #[ORM\JoinColumn(name: "specialite_id", referencedColumnName: "id", nullable: false)]
+    #[ManyToOne(targetEntity: Specialite::class, inversedBy: "praticiens")]
+    #[JoinColumn(name: "specialite_id", referencedColumnName: "id", nullable: false)]
     private Specialite $specialite;
 
-    #[ORM\ManyToOne(targetEntity: Groupement::class, inversedBy: "praticiens")]
-    #[ORM\JoinColumn(name: "groupe_id", referencedColumnName: "id", nullable: true)]
+    #[ManyToOne(targetEntity: Groupement::class, inversedBy: "praticiens")]
+    #[JoinColumn(name: "groupe_id", referencedColumnName: "id", nullable: true)]
     private ?Groupement $groupe;
 
+    public function getId(): string{
+        return $this->id;
+    }
+    public function getNom(): string{
+        return $this->nom;
+    }
+    public function getPrenom(): string{
+        return $this->prenom;
+    }
+    public function getVille(): string{
+        return $this->ville;
+    }
+    public function getEmail(): string{
+        return $this->email;
+    }
+    public function getTelephone(): string{
+        return $this->telephone;
+    }
+    public function getGroupe(): Groupement{
+        return $this->groupe;
+    }
 }

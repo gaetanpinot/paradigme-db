@@ -35,7 +35,11 @@ class Query {
     }
 
     public function get(): array{
-        $statement = $this->pdo->prepare('SELECT '.$this->columns.' FROM '.$this->table.' WHERE '.implode(' AND ',$this->whereConditions));
+        $query = 'SELECT '.$this->columns.' FROM '.$this->table;
+        if (count($this->whereConditions) > 0) {
+            $query .= ' WHERE '.implode(' AND ',$this->whereConditions);
+        }
+        $statement = $this->pdo->prepare($query);
         $statement->execute($this->args);
         return($statement->fetchAll());
     }

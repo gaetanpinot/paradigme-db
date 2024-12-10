@@ -22,3 +22,9 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+.idea/
+misc.xml
+paradigme-db.iml
+php.xml
+workspace.xml
