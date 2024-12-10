@@ -4,6 +4,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 //setup
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\DriverManager;
 // contenant les classes entité
 use Doctrine\DBAL\Types\Type;
@@ -98,6 +99,58 @@ Praticien supprimé
 </p>
 ";
 
+
+//Exercice 2 : 
+echo "<h3> Exercice 2";
+//1. Afficher le praticien dont le mail est Gabrielle.Klein@live.com (requête simple)
+$praticien = $pratiecienRepo->findBy(array('email' => 'Gabrielle.Klein@live.com' ))[0];
+echo "<br> <h3>1) </h3> <p> 
+id : {$praticien->getId()}, identité : {$praticien->getNom()} {$praticien->getPrenom()}, ville : {$praticien->getVille()}, email : {$praticien->getEmail()}, téléphone : {$praticien->getTelephone()}
+<p>";
+
+//2. Afficher le praticien de nom Goncalves à Paris (requête simple)
+$praticien = $pratiecienRepo->findBy(array('nom' => 'Goncalves', "ville" => 'Paris' ))[0];
+echo "<br> <h3>2) </h3> <p> 
+id : {$praticien->getId()}, identité : {$praticien->getNom()} {$praticien->getPrenom()}, ville : {$praticien->getVille()}, email : {$praticien->getEmail()}, téléphone : {$praticien->getTelephone()}
+<p>";
+//3. Afficher la spécialité de libellé 'pédiatrie' ainsi que les praticiens associés. (requête simple)
+$specialite = $specialiteRepo->findBy(array('libelle' => 'pédiatrie' ))[0];
+
+foreach ($specialite->getPraticiens() as $praticien) { 
+    echo "<p> 
+    id : {$praticien->getId()}, identité : {$praticien->getNom()} {$praticien->getPrenom()}, ville : {$praticien->getVille()}, email : {$praticien->getEmail()}, téléphone : {$praticien->getTelephone()}
+    <p>";
+}
+//4. afficher les types de groupements contenants 'santé' dans leur description (utiliser une requête critères)
+$groupementTypes = $typegroupementRepo->matching(
+    Criteria::create()->where(Criteria::expr()->contains('typeDescription','santé'))
+)->toArray();
+
+echo "<h3>4) </h3>";
+foreach($groupementTypes as $type) {
+    echo "<h4> Groupements de type : {$type->getTypeLibelle()} </h4>";
+    foreach ($type->getGroupements() as $groupement) {
+       
+        echo "<p> 
+        id : {$groupement->getId()}, nom : {$groupement->getNom()}, ville : {$groupement->getVille()}, adresse : {$groupement->getAdresse()}
+        <p>";
+
+    }
+}
+//5. afficher les praticiens de la spécialité ‘ophtalmologie exerçants à Paris
+
+$specialite = $specialiteRepo->matching(
+    Criteria::create()->where(Criteria::expr()->eq('libelle','ophtalmologie'))
+)->first();
+echo "<br> <h3>5) </h3>";
+foreach ($specialite->getPraticiens() as $praticien) { 
+    echo "<p> 
+    id : {$praticien->getId()}, identité : {$praticien->getNom()} {$praticien->getPrenom()}, ville : {$praticien->getVille()}, email : {$praticien->getEmail()}, téléphone : {$praticien->getTelephone()}
+    <p>";
+}
+
+
+
 $specialite = $specialiteRepo->find(1);
 echo "
 <h3>Exercice 3</h3>
@@ -154,14 +207,3 @@ $specialiteRepo = $entityManager->getRepository(Specialite::class);
 $prat = $pratiecienRepo->findOneBy(['nom'=>'Paul']);
 //var_dump($prat);
 
-
-//Exercice 2 : 
-//1. Afficher le praticien dont le mail est Gabrielle.Klein@live.com (requête simple)
-var_dump($pratiecienRepo->findBy(array('email' => 'Gabrielle.Klein@live.com' )));
-//2. Afficher le praticien de nom Goncalves à Paris (requête simple)
-var_dump($pratiecienRepo->findBy(array('nom' => 'Goncalves', "ville" => 'Paris' )));
-//3. Afficher la spécialité de libellé 'pédiatrie' ainsi que les praticiens associés. (requête simple)
-var_dump($specialiteRepo->findBy(array('libelle' => 'pédiatrie' )));
-//4. afficher les types de groupements contenants 'santé' dans leur description (utiliser une
-//requête critères)
-//5. afficher les praticiens de la spécialité ‘ophtalmologie exerçants à Paris
