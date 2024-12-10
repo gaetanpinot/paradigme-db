@@ -1,0 +1,24 @@
+0 use chopizza
+1 db.produits.find().pretty();
+2 db.produits.estimatedDocumentCount();
+3 db.produits.find().sort({ numero: -1 }).pretty();
+4 db.produits.find({ libelle: "Margherita" }).pretty();
+5 db.produits.find({ categorie: "Boissons" }).pretty();
+6 db.produits.find({}, { categorie: 1, numero: 1, libelle: 1, _id: 0 }).pretty();
+7 db.produits.find({}, { categorie: 1, numero: 1, libelle: 1, "tarifs.taille": 1, "tarifs.tarif": 1, _id: 0 }).pretty();
+8 db.produits.find({ "tarifs.tarif": { $lt: 8.0 } }).pretty();
+9 db.produits.find({ tarifs: { $elemMatch: { taille: "grande", tarif: { $lt: 8.0 } } } }).pretty();
+10 db.produits.insertOne({
+  numero: 11,
+  libelle: "Nouvelle Pizza",
+  description: "Tomate, fromage, basilic",
+  image: "https://cdn.shopify.com/s/files/1/0274/9503/9079/files/20220211142754-margherita-9920_5a73220e-4a1a-4d33-b38f-26e98e3cd986.jpg?v=1723650067",
+  categorie: "Pizzas",
+  tarifs: [
+    { taille: "normale", tarif: 9.99 },
+    { taille: "grande", tarif: 12.99 }
+  ],
+  recettes: []
+});
+11 const produit1 = db.produits.findOne({ numero: 1 });
+db.recettes.find({ _id: { $in: produit1.recettes } }).pretty();

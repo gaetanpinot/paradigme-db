@@ -15,6 +15,7 @@ RUN curl -sSLf \
 # PHP Configuration
 # RUN install-php-extensions  mongodb
 RUN install-php-extensions  gettext iconv intl  tidy zip sockets
+RUN install-php-extensions  mongodb
 RUN install-php-extensions  pgsql 
 RUN install-php-extensions  mysqli
 RUN install-php-extensions   pdo_pgsql
