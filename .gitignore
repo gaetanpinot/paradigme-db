@@ -28,3 +28,4 @@ misc.xml
 paradigme-db.iml
 php.xml
 workspace.xml
+.php-cs-fixer.cache

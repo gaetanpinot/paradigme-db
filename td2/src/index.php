@@ -15,11 +15,11 @@ use iutnc\Models\Personnel;
 use iutnc\Models\Praticien;
 use iutnc\Models\Specialite;
 use iutnc\Models\TypeGroupement;
+
 $entity_path = [__DIR__ . '/Models'];
-$isDevMode=true;
+$isDevMode = true;
 $dbParams = parse_ini_file(__DIR__ . '/config/pgsql.ini');
-$config = ORMSetup::
-createAttributeMetadataConfiguration($entity_path, $isDevMode);
+$config = ORMSetup::createAttributeMetadataConfiguration($entity_path, $isDevMode);
 $connection = DriverManager::getConnection($dbParams, $config);
 
 $entityManager = new EntityManager($connection, $config);
@@ -36,6 +36,7 @@ echo "
 ";
 
 $specialite = $specialiteRepo->find(1);
+var_dump($specialite);
 echo "
 <p><h4>1</h4>
 id : {$specialite->getId()}, libelle : {$specialite->getLibelle()}, description : {$specialite->getDescription()}.
@@ -43,6 +44,9 @@ id : {$specialite->getId()}, libelle : {$specialite->getLibelle()}, description 
 ";
 
 $groupement = $typegroupementRepo->find(1);
+/*foreach($groupement->getGroupements() as $g) {*/
+/*    echo "<p> {$g->getNom()} </p>";*/
+/*}*/
 echo "
 <p><h4>2</h4>
 id : {$groupement->getId()}, libelle : {$groupement->getTypeLibelle()}, description : {$groupement->getTypeDescription()}.
@@ -58,10 +62,11 @@ groupe : {$prat->getGroupe()->getNom()}, specialite {$prat->getSpecialite()->get
 ";
 
 $prat = new Praticien();
-$prat->setNom( "Superman");
-$prat->setPrenom( "il à pas de prenom superman");
-$prat->setSpecialite( $specialiteRepo->findOneBy(['libelle'=>'pédiatrie']));
-$prat->setGroupe($groupementRepo->findOneBy(['nom'=>'Barbe']));
+$prat->setNom("Superman");
+$prat->setPrenom("il à pas de prenom superman");
+$prat->setSpecialite($specialiteRepo->findOneBy(['libelle' => 'pédiatrie']));
+$grou = $groupementRepo->findOneBy(['nom' => 'Barbe']);
+$prat->setGroupe($grou);
 $prat->setVille("tourcoing");
 $prat->setEmail("super@man.org");
 $prat->setTelephone("3615");
@@ -69,7 +74,7 @@ $prat->setTelephone("3615");
 $entityManager->persist($prat);
 $entityManager->flush();
 
-$prat = $pratiecienRepo->findOneBy(['nom'=>'Superman']);
+$prat = $pratiecienRepo->findOneBy(['nom' => 'Superman']);
 echo "
 <p><h4>5</h4>
 id : {$prat->getId()}, nom : {$prat->getNom()}, prenom : {$prat->getPrenom()}, ville : {$prat->getVille()}, email : {$prat->getEmail()}, telephone : {$prat->getTelephone()},
@@ -77,7 +82,7 @@ groupe : {$prat->getGroupe()->getNom()}, specialite {$prat->getSpecialite()->get
 </p>
 ";
 
-$prat->setGroupe($groupementRepo->findOneBy(['nom'=>'Bigot']));
+$prat->setGroupe($groupementRepo->findOneBy(['nom' => 'Bigot']));
 $prat->setVille("Paris");
 
 $entityManager->flush();
@@ -102,9 +107,9 @@ $specialite = $specialiteRepo->find(1);
 echo "
 <h3>Exercice 3</h3>
 <p><h4> 1</h4>";
-$prats = $pratiecienRepo->getPraticiensBySpecialite($specialite); 
-foreach($prats as $prat){
-	echo "<p>
+$prats = $pratiecienRepo->getPraticiensBySpecialite($specialite);
+foreach ($prats as $prat) {
+    echo "<p>
 	id : {$prat->getId()}, nom : {$prat->getNom()}, prenom : {$prat->getPrenom()}, ville : {$prat->getVille()}, email : {$prat->getEmail()}, telephone : {$prat->getTelephone()},
 	groupe : {$prat->getGroupe()->getNom()}, specialite {$prat->getSpecialite()->getLibelle()}
 	</p>";
@@ -116,8 +121,8 @@ $specialites = $specialiteRepo->getSpecialiteWithWord($mot);
 echo "
 <p><h4>2</h4>
 Mot chérché : $mot";
-foreach($specialites as $specialite){
-	echo "<p> id : {$specialite->getId()}, libelle : {$specialite->getLibelle()}, description : {$specialite->getDescription()}. </p>";
+foreach ($specialites as $specialite) {
+    echo "<p> id : {$specialite->getId()}, libelle : {$specialite->getLibelle()}, description : {$specialite->getDescription()}. </p>";
 }
 echo "</p>";
 
@@ -128,9 +133,9 @@ echo "
 <p><h4> 3</h4>
 Ville cherché : $ville
 Specialite cherché : {$specialite->getLibelle()}";
-$prats = $pratiecienRepo->getPraticiensBySpecialiteAndVille($specialite, $ville); 
-foreach($prats as $prat){
-	echo "<p>
+$prats = $pratiecienRepo->getPraticiensBySpecialiteAndVille($specialite, $ville);
+foreach ($prats as $prat) {
+    echo "<p>
 	id : {$prat->getId()}, nom : {$prat->getNom()}, prenom : {$prat->getPrenom()}, ville : {$prat->getVille()}, email : {$prat->getEmail()}, telephone : {$prat->getTelephone()},
 	groupe : {$prat->getGroupe()->getNom()}, specialite {$prat->getSpecialite()->getLibelle()}
 	</p>";
@@ -143,8 +148,8 @@ echo "
 <p><h4> 4</h4>
 Ville cherché : $ville";
 $personnels = $personnelRepo->getPersonnelByVille($ville);
-foreach($personnels as $perso){
-	echo "<p>
+foreach ($personnels as $perso) {
+    echo "<p>
 	id : {$perso->getId()}, nom : {$perso->getNom()}, prenom : {$perso->getPrenom()}, ville : {$perso->getGroupe()->getVille()}, email : {$perso->getMail()}, telephone : {$perso->getTelephone()},
 	groupe : {$perso->getGroupe()->getNom()}
 	</p>";
